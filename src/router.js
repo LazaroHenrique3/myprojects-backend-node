@@ -23,8 +23,8 @@ router.post('/users', userMiddlewares.validateCreateUser, userController.createU
 router.use(auth.authenticate)
 
 //Projects
-router.get('/project/:id/:titleSearch', projectController.getAll)
-router.post('/project', projectMiddlewares.validateCreateProject, projectController.createProject)
+router.get('/project/:id/:titleSearch', projectMiddlewares.checkUserId, projectController.getAll)
+router.post('/project/:id', projectMiddlewares.checkUserId, projectMiddlewares.validateCreateProject, projectController.createProject)
 router.delete('/project/:id', projectController.deleteProject)
 router.put('/project/:id', projectMiddlewares.validateUpdateProject, projectController.updateProject)
 
@@ -36,7 +36,7 @@ router.put('/task/:id', taskMiddlewares.validateUpdateTask, taskController.updat
 
 //Users
 router.get('/users', userController.getAll)
-router.delete('/users/:id', userMiddlewares.validateDeleteUser,  userController.deleteUser)
-router.put('/users/:id', userMiddlewares.validateUpdateUser,  userController.updateUser)
+router.delete('/users/:id', userMiddlewares.checkUserId, userMiddlewares.validateDeleteUser,  userController.deleteUser)
+router.put('/users/:id', userMiddlewares.checkUserId, userMiddlewares.validateUpdateUser,  userController.updateUser)
 
 module.exports = router

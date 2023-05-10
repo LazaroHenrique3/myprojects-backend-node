@@ -66,8 +66,21 @@ const validateUpdateUser = async (req, res, next) => {
   next();
 };
 
+const checkUserId = async(req, res, next) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  //23 é o usuario de teste, logo não pode sofrear alterações
+  //O usuario só pode fazer alterações (Update, Delete nele mesmo)
+  if (userId == 23 || userId != id) {
+    return res.status(405).send('Not Allowed!');
+  }
+  next();
+}
+
 module.exports = {
   validateCreateUser,
   validateDeleteUser,
   validateUpdateUser,
+  checkUserId
 };

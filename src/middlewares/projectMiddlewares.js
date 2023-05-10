@@ -39,7 +39,23 @@ const validateUpdateProject = async (req, res, next) => {
     }
 };
 
+/*Lógica bem parecida com a do user, só que aqui basicamente irei impedir o user de 
+dar get(buscar) nos proejtos que não sejam dele, logo por consequencia ele não poderá nem 
+fazer update ou delete em projetos allheios ou sequer fazer algo com as tasks destes projetos,
+além disso adicionei na rota de post também para impedir a criação de projetos para users que
+não sejam ele*/ 
+const checkUserId = async (req, res, next) => {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    if (userId != id) {
+        return res.status(405).send('Not Allowed!');
+    }
+    next();
+}
+
 module.exports = {
     validateCreateProject,
-    validateUpdateProject
+    validateUpdateProject,
+    checkUserId,
 };
