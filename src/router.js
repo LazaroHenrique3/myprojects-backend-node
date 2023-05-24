@@ -1,10 +1,6 @@
 const express = require('express')
-const cors = require('cors')
 
 const router = express.Router()
-
-// Configuração do CORS
-router.use(cors())
 
 //Controllers
 const projectController = require('./controllers/projectController')
